@@ -1,7 +1,5 @@
-# This program scrapes the subreddit /r/buildapcsales and returns the 10 newest posts.
-# It then checks the title of each post for a keyword and if it finds one, it sends an email to the user.
-# The user can then click on the link in the email to go to the post on reddit.
-import os
+# This script will search for new posts on a subreddit containing a search term
+# and send an email with the results.
 import praw
 import smtplib
 from dotenv import load_dotenv
