@@ -1,5 +1,6 @@
 # This script will search for new posts on a subreddit containing a search term
 # and send an email with the results.
+import os
 import praw
 import smtplib
 from dotenv import load_dotenv
