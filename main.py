@@ -24,11 +24,11 @@ def send_email(subject, body, recipient, gmail_user, gmail_password):
 
 def main(search_term, subreddit, email_recipient, gmail_user, gmail_password):
     reddit = praw.Reddit(
-        client_id="o69SO2QHp15j2A",
-        client_secret=os.environ.get("REDDIT_SECRET"),
+        client_id=os.environ.get("REDDIT_CLIENT_ID"),
+        client_secret=os.environ.get("REDDIT_CLIENT_SECRET"),
         password=os.environ.get("REDDIT_PASSWORD"),
-        user_agent="Subreddit scanner by /u/dudemanmcchill",
-        username="dudemanmcchill",
+        user_agent=os.environ.get("REDDIT_USER_AGENT"),
+        username=os.environ.get("REDDIT_USERNAME"),
     )
 
     subreddit = reddit.subreddit(subreddit)
@@ -62,7 +62,7 @@ if __name__ == "__main__":
     search_term = "SSD"
     subreddit = "buildapcsales"
     email_recipient = "rcummings.04@gmail.com"
-    gmail_user = "rcummings.dev@gmail.com"
+    gmail_user = os.environ.get("GMAIL_USERNAME")
     gmail_password = os.getenv("GMAIL_PASSWORD")
 
     main(search_term, subreddit, email_recipient, gmail_user, gmail_password)
