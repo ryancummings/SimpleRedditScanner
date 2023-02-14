@@ -1,2 +1,2 @@
 .env
-sent_posts.txt
+sent_posts/*

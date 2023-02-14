@@ -35,7 +35,15 @@ def main(search_term, subreddit, email_recipient, gmail_user, gmail_password):
 
     found_posts = []
 
-    sent_posts_file = "sent_posts.txt"
+    # Set sent_post_file to a file in the sent_posts directory
+    # The file name will be the search term and subreddit
+    # This will allow us to keep track of which posts we've already sent
+    sent_posts_file = os.path.join(
+        os.getcwd(),
+        "sent_posts",
+        f"{search_term}_{subreddit}.txt",
+    )
+
     try:
         with open(sent_posts_file, "r") as f:
             sent_posts = f.read().splitlines()
@@ -43,7 +51,7 @@ def main(search_term, subreddit, email_recipient, gmail_user, gmail_password):
         sent_posts = []
 
     for post in new_posts:
-        if search_term in post.title and post.title not in sent_posts:
+        if search_term.lower() in post.title.lower() and post.title not in sent_posts:
             print(post.title)
             found_posts.append(post)
 
@@ -58,10 +66,36 @@ def main(search_term, subreddit, email_recipient, gmail_user, gmail_password):
 
 
 if __name__ == "__main__":
-    search_term = "SSD"
-    subreddit = "buildapcsales"
-    email_recipient = "rcummings.04@gmail.com"
-    gmail_user = os.environ.get("GMAIL_USERNAME")
-    gmail_password = os.getenv("GMAIL_PASSWORD")
+    # Create a list of searches, subreddits, and email recipients, to loop over later
+    searches = [
+        {
+            "search_term": "SSD",
+            "subreddit": "buildapcsales",
+            "email_recipient": "rcummings.04@gmail.com",
+        },
+        {
+            "search_term": "GPU",
+            "subreddit": "buildapcsales",
+            "email_recipient": "rcummings.04@gmail.com",
+        },
+        {
+            "search_term": "CPU",
+            "subreddit": "buildapcsales",
+            "email_recipient": "rcummings.04@gmail.com",
+        },
+        {
+            "search_term": "myu",
+            "subreddit": "pen_swap",
+            "email_recipient": "rcummings.04@gmail.com",
+        },
+    ]
 
-    main(search_term, subreddit, email_recipient, gmail_user, gmail_password)
+    # Loop over the searches and send emails
+    for search in searches:
+        main(
+            search["search_term"],
+            search["subreddit"],
+            search["email_recipient"],
+            os.environ.get("GMAIL_USERNAME"),
+            os.getenv("GMAIL_PASSWORD"),
+        )
